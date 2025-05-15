@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rooftop Romance</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #111;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100vh;
+      background-image: url('https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    #game-box {
+      width: 90%;
+      max-width: 600px;
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 20px;
+      margin: 30px;
+      border-radius: 10px;
+    }
+    #choices button {
+      background-color: #444;
+      color: #f5f5f5;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    #choices button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-box">
+    <div id="story"></div>
+    <div id="choices"></div>
+  </div>
+
+  <script>
+    const storyElement = document.getElementById("story");
+    const choicesElement = document.getElementById("choices");
+
+    const scenes = {
+      start: {
+        text: "The city feels quieter up here. Like it's holding its breath.\n\nA door creaks. A woman steps out — bold, barefoot, a leather jacket draped over one shoulder.\n\n\"You always brood on rooftops, or is tonight special?\"",
+        choices: [
+          { text: "Then let's skip to the interesting part.", next: "steamy" },
+          { text: "You caught me off guard... I like that.", next: "intrigued" }
+        ]
+      },
+      steamy: {
+        text: "\"Mmm. I like a man who doesn’t waste time.\"\n\nYou walk toward her slowly.\n\n\"And I like a woman who knows what she wants.\"\n\n\"Lucky us, then.\"\n\nYou lock eyes. The tension is electric. The city disappears. There’s only the hum between you.",
+        choices: []
+      },
+      intrigued: {
+        text: "\"Off guard? That’s rare. You're hard to read.\"\n\n\"You like mysteries?\"\n\n\"Only if I get to solve them.\"\n\nShe steps closer, playful and dangerous. You’re not sure if she’ll kiss you or steal your wallet. Maybe both.",
+        choices: []
+      }
+    };
+
+    function showScene(key) {
+      const scene = scenes[key];
+      storyElement.innerText = scene.text;
+      choicesElement.innerHTML = "";
+      scene.choices.forEach(choice => {
+        const button = document.createElement("button");
+        button.innerText = choice.text;
+        button.onclick = () => showScene(choice.next);
+        choicesElement.appendChild(button);
+      });
+    }
+
+    showScene("start");
+  </script>
+</body>
+</html>
